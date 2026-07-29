@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>هلدینگ صداقتیون</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://v1.fontapi.ir/css/Vazir');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazir', sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100dvh;
+            background-color: #03070b;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100dvh;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.4), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, rgba(255,255,255,0.3), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, rgba(255,255,255,0.5), rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.4), rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: floatingStars 100s linear infinite;
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes floatingStars {
+            0%   { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+
+        @keyframes welcomePulse {
+            from { opacity: 0.55; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1.02); }
+        }
+
+        @keyframes typingLine {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes typingLine2 {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .main-footer {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #9aafd4;
+            z-index: 10;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 0 16px;
+            transition: opacity 0.5s;
+        }
+
+        .neon-blink-yellow {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #f5c518,
+                0 0 20px #f5c518,
+                0 0 30px #f5c518;
+            animation: blinker 2s infinite alternate;
+        }
+
+        @keyframes blinker {
+            0%   { opacity: 1; }
+            40%  { opacity: 1; }
+            50%  { opacity: 0.6; text-shadow: none; }
+            60%  { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+
+        .hallway {
+            display: flex;
+            gap: 80px;
+            z-index: 10;
+            transition: opacity 0.5s;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 16px;
+            flex: 1;
+            align-content: center;
+            box-sizing: border-box;
+        }
+
+        .door-container {
+            text-align: center;
+            perspective: 1500px;
+            cursor: pointer;
+        }
+
+        .door-title {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .door-frame {
+            width: 200px;
+            height: 340px;
+            max-width: 42vw;
+            max-height: 72vw;
+            border: 4px solid #1a1200;
+            background-color: #000;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(0,0,0,0.8);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .door {
+            position: absolute;
+            top: 0; right: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1a1200 0%, #3d2e00 50%, #5c4500 100%);
+            border: 2px solid #f5c518;
+            border-radius: 4px 4px 0 0;
+            transform-origin: right;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 900;
+            font-size: 22px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+        }
+
+        .door::after {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            width: 8px;
+            height: 45px;
+            background: #111;
+            border-radius: 4px;
+            border: 1px solid #f5c518;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        .door:hover {
+            box-shadow: 0 0 20px rgba(245,197,24,0.5), inset 0 0 15px rgba(255,255,255,0.1);
+        }
+
+        .portal-light {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            opacity: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(245,197,24,0.7) 30%, rgba(245,197,24,0.15) 60%, transparent 80%);
+            filter: blur(15px);
+            mix-blend-mode: screen;
+            transition: transform 1.5s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.5s;
+            z-index: 1;
+        }
+
+        .door-container.active .door { transform: rotateY(120deg); }
+        .door-container.active .portal-light {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(40);
+        }
+
+        .world {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1a1200 0%, #070400 100%);
+            overflow-y: auto;
+            padding: 20px 16px;
+            box-sizing: border-box;
+        }
+
+        .world.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .world-content {
+            background: rgba(15, 10, 0, 0.88);
+            padding: 40px 36px;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            border: 1px solid rgba(245, 197, 24, 0.25);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 30px rgba(245,197,24,0.07);
+            transform: translateY(40px) scale(0.95);
+            transition: all 1s 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            width: min(100%, 620px);
+            max-height: 90vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .world.active .world-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .world h2 {
+            font-size: 26px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid rgba(245, 197, 24, 0.2);
+            padding-bottom: 18px;
+        }
+
+        .feature-list {
+            margin-bottom: 22px;
+            text-align: right;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .feature-list p {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #e8d48a;
+            line-height: 1.8;
+            position: relative;
+            padding-right: 22px;
+        }
+
+        .feature-list p::before {
+            content: '✦';
+            position: absolute;
+            right: 0;
+            color: #f5c518;
+            font-size: 12px;
+        }
+
+        .links-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .links-grid a {
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 20px;
+            background: rgba(245, 197, 24, 0.05);
+            border: 1px solid rgba(245, 197, 24, 0.3);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .links-grid a i {
+            font-size: 24px;
+            color: #f5c518;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .links-grid a:hover {
+            background: rgba(245, 197, 24, 0.15);
+            border-color: #f5c518;
+            box-shadow: 0 0 20px rgba(245,197,24,0.3);
+            transform: translateY(-2px);
+        }
+
+        .links-grid a:hover i { transform: scale(1.2); }
+
+        .phone-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .phone-name {
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .phone-number {
+            font-size: 16px;
+            direction: ltr;
+            color: #ccc;
+        }
+
+        .back-btn {
+            padding: 12px 35px;
+            background: transparent;
+            color: #f5c518;
+            border: 1px solid #f5c518;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            font-family: 'Vazir', sans-serif;
+        }
+
+        .back-btn:hover {
+            background: #f5c518;
+            color: #070400;
+            box-shadow: 0 0 15px rgba(245,197,24,0.6);
+            font-weight: bold;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid rgba(245, 197, 24, 0.15);
+            margin: 20px 0;
+        }
+
+        .welcome-wrap {
+            position: relative;
+            z-index: 10;
+            margin: 18px 16px 18px;
+            width: min(94vw, 720px);
+            display: flex;
+            justify-content: center;
+        }
+
+        .welcome-type {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            padding: 15px 18px;
+            border-radius: 16px;
+            background: rgba(7, 4, 0, 0.88);
+            border: 1px solid rgba(245,197,24,0.28);
+            box-shadow: 0 0 18px rgba(245,197,24,0.12), inset 0 0 14px rgba(245,197,24,0.05);
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .welcome-line {
+            display: block;
+            color: #fff7d1;
+            font-size: clamp(16px, 2.8vw, 19px);
+            line-height: 2.05;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(245,197,24,0.75), 0 0 16px rgba(245,197,24,0.35);
+        }
+
+        .line-1 {
+            animation: typingLine 2.4s steps(34, end) forwards, welcomePulse 2.2s ease-in-out infinite alternate;
+        }
+
+        .line-2 {
+            animation: typingLine2 2.1s steps(30, end) forwards 2.5s, welcomePulse 2.2s ease-in-out infinite alternate;
+        }
+
+        .welcome-type::after {
+            content: '';
+            position: absolute;
+            inset: -20%;
+            background: radial-gradient(circle, rgba(245,197,24,0.16), transparent 60%);
+            filter: blur(10px);
+            pointer-events: none;
+            animation: welcomePulse 2.2s ease-in-out infinite alternate;
+        }
+
+        @media (max-width: 600px) {
+            .welcome-wrap {
+                width: min(96vw, 720px);
+                margin: 12px 10px 14px;
+            }
+
+            .welcome-type {
+                padding: 12px 14px;
+            }
+
+            .welcome-line {
+                font-size: 17px;
+                line-height: 2.1;
+            }
+
+            .hallway { gap: 28px; padding: 16px; }
+            .door-title { font-size: 18px; }
+            .door-frame { width: min(42vw, 160px); height: min(72vw, 280px); }
+            .door { font-size: 18px; }
+            .world-content { padding: 28px 20px; width: min(92vw, 620px); max-height: 88vh; overflow-y: auto; }
+            .world h2 { font-size: 20px; }
+            .links-grid a { font-size: 14px; padding: 14px 16px; }
+            .links-grid a i { font-size: 20px; }
+            .feature-list p { font-size: 15px; }
+            .back-btn { font-size: 15px; padding: 10px 28px; }
+            .main-footer { font-size: 13px; }
+        }
+
+        @media (max-width: 400px) {
+            .door-frame { width: 40vw; height: 68vw; }
+            .door-title { font-size: 16px; margin-bottom: 14px; }
+            .world-content { width: 94vw; padding: 22px 16px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .welcome-line,
+            .welcome-type::after {
+                animation: none;
+                width: auto;
+            }
+        }
+        .color-filter-input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(245, 197, 24, 0.3);
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Vazir', sans-serif;
+            box-sizing: border-box;
+            direction: rtl;
+        }
+
+        .color-filter-input:focus {
+            outline: none;
+            border-color: #f5c518;
+        }
+
+        .color-filter-input::placeholder {
+            color: #a89660;
+        }
+
+        .color-note {
+            font-size: 14px;
+            color: #e8d48a;
+            line-height: 1.9;
+            text-align: right;
+            background: rgba(245, 197, 24, 0.06);
+            border: 1px solid rgba(245, 197, 24, 0.25);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+            gap: 12px;
+            margin-bottom: 26px;
+        }
+
+        .swatch {
+            cursor: pointer;
+            border: 2px solid rgba(245, 197, 24, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.3);
+            transition: all 0.25s;
+            text-align: center;
+        }
+
+        .swatch:hover {
+            border-color: rgba(245, 197, 24, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .swatch.selected {
+            border-color: #f5c518;
+            box-shadow: 0 0 16px rgba(245,197,24,0.5);
+        }
+
+        .swatch-color {
+            width: 100%;
+            height: 56px;
+        }
+
+        .swatch-label {
+            font-size: 11px;
+            color: #e8d48a;
+            padding: 6px 4px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .selected-color-box {
+            display: none;
+            border: 1px solid rgba(245, 197, 24, 0.4);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 24px;
+            background: rgba(245, 197, 24, 0.06);
+            text-align: center;
+        }
+
+        .selected-color-box.visible {
+            display: block;
+        }
+
+        .selected-color-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .selected-color-code {
+            font-size: 20px;
+            font-weight: 900;
+            color: #f5c518;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            direction: ltr;
+        }
+
+        .selected-color-name {
+            font-size: 14px;
+            color: #e8d48a;
+            margin-bottom: 16px;
+        }
+
+        .copy-code-btn {
+            background: rgba(245, 197, 24, 0.15);
+            border: 1px solid #f5c518;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Vazir', sans-serif;
+            transition: all 0.25s;
+        }
+
+        .copy-code-btn:hover {
+            background: rgba(245, 197, 24, 0.3);
+        }
+
+        .copy-code-btn.copied {
+            background: #f5c518;
+            color: #1a1200;
+        }
+
+        @media (max-width: 480px) {
+            .color-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+            .swatch-color { height: 46px; }
+        }
+
+
+        .service-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 22px;
+            text-align: right;
+        }
+
+        .service-form label {
+            font-size: 13px;
+            color: #e8d48a;
+            margin-bottom: -6px;
+        }
+
+        .service-form input,
+        .service-form select,
+        .service-form textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(245, 197, 24, 0.3);
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            font-size: 15px;
+            font-family: 'Vazir', sans-serif;
+            box-sizing: border-box;
+            direction: rtl;
+        }
+
+        .service-form input:focus,
+        .service-form select:focus,
+        .service-form textarea:focus {
+            outline: none;
+            border-color: #f5c518;
+        }
+
+        .service-form select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f5c518' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 14px center;
+            padding-left: 36px;
+        }
+
+        .service-form select option {
+            background: #1a1200;
+            color: #fff;
+        }
+
+        .service-form textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .service-form input[type="date"],
+        .service-form input[type="time"] {
+            direction: ltr;
+            text-align: right;
+        }
+
+        .file-upload-box {
+            border: 1px dashed rgba(245, 197, 24, 0.4);
+            border-radius: 12px;
+            padding: 16px;
+            background: rgba(0,0,0,0.25);
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.25s, background 0.25s;
+        }
+
+        .file-upload-box:hover {
+            border-color: #f5c518;
+            background: rgba(245, 197, 24, 0.06);
+        }
+
+        .file-upload-box input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-label {
+            font-size: 14px;
+            color: #e8d48a;
+            line-height: 1.7;
+        }
+
+        .file-upload-label i {
+            display: block;
+            font-size: 28px;
+            color: #f5c518;
+            margin-bottom: 8px;
+        }
+
+        .file-preview-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .file-preview-item {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(245, 197, 24, 0.3);
+            background: #111;
+        }
+
+        .file-preview-item img,
+        .file-preview-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-preview-item .file-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            font-size: 9px;
+            background: rgba(0,0,0,0.75);
+            color: #e8d48a;
+            padding: 2px 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-preview-item .file-remove {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(180,30,30,0.9);
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            line-height: 20px;
+            padding: 0;
+        }
+
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .form-row-2 { grid-template-columns: 1fr; }
+        }
+
+        .submit-btn {
+            padding: 14px 28px;
+            background: rgba(245, 197, 24, 0.15);
+            color: #fff;
+            border: 1px solid #f5c518;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Vazir', sans-serif;
+            font-weight: 700;
+            transition: all 0.25s;
+            margin-top: 4px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #f5c518;
+            color: #070400;
+            box-shadow: 0 0 18px rgba(245,197,24,0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.55;
+            cursor: wait;
+        }
+
+        .form-msg {
+            display: none;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .form-msg.visible { display: block; }
+
+        .form-msg.ok {
+            background: rgba(0, 180, 80, 0.12);
+            border: 1px solid rgba(0, 200, 90, 0.4);
+            color: #8dffb0;
+        }
+
+        .form-msg.err {
+            background: rgba(200, 40, 40, 0.12);
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            color: #ffb0b0;
+        }
+
+        .track-result {
+            display: none;
+            border: 1px solid rgba(245, 197, 24, 0.35);
+            border-radius: 14px;
+            padding: 18px 16px;
+            margin-bottom: 18px;
+            background: rgba(245, 197, 24, 0.06);
+            text-align: right;
+        }
+
+        .track-result.visible { display: block; }
+
+        .track-result .track-code {
+            font-size: 18px;
+            font-weight: 900;
+            color: #f5c518;
+            direction: ltr;
+            margin-bottom: 10px;
+        }
+
+        .track-result .track-row {
+            font-size: 14px;
+            color: #e8d48a;
+            margin-bottom: 6px;
+            line-height: 1.7;
+        }
+
+        .track-result .track-row strong {
+            color: #fff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        .status-pending { background: rgba(245,197,24,0.2); color: #f5c518; }
+        .status-progress { background: rgba(60,140,255,0.2); color: #7ab8ff; }
+        .status-done { background: rgba(0,180,80,0.2); color: #6dff9a; }
+        .status-cancelled { background: rgba(200,40,40,0.2); color: #ff8a8a; }
+
+    </style>
+</head>
+<body>
+
+    <div class="welcome-wrap">
+        <div class="welcome-type">
+            <span class="welcome-line line-1">درود، از اینکه به جمع ما اضافه شدین</span>
+            <span class="welcome-line line-2">صمیمانه خرسند و مفتخر هستیم.</span>
+        </div>
+    </div>
+
+    <div class="hallway" id="hallway">
+        <div class="door-container" onclick="enterWorld('caspian')">
+            <h3 class="door-title neon-blink-yellow">مجموعه کاسپین</h3>
+            <div class="door-frame">
+                <div class="portal-light"></div>
+                <div class="door">ورود</div>
+            </div>
+        </div>
+
+        <div class="door-container" onclick="enterWorld('colorroom')">
+            <h3 class="door-title neon-blink-yellow">اتاق رنگ کاسپین</h3>
+            <div class="door-frame">
+                <div class="portal-light"></div>
+                <div class="door">ورود</div>
+            </div>
+        </div>
+
+        <div class="door-container" onclick="enterWorld('booking')">
+            <h3 class="door-title neon-blink-yellow">نوبت‌دهی آنلاین</h3>
+            <div class="door-frame">
+                <div class="portal-light"></div>
+                <div class="door">ورود</div>
+            </div>
+        </div>
+
+        <div class="door-container" onclick="enterWorld('tracking')">
+            <h3 class="door-title neon-blink-yellow">پیگیری سفارش</h3>
+            <div class="door-frame">
+                <div class="portal-light"></div>
+                <div class="door">ورود</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="world" id="world-caspian">
+        <div class="world-content">
+            <h2 class="neon-blink-yellow">مجموعه تخصصی دوچرخه کاسپین</h2>
+
+            <div class="feature-list">
+                <p>تعمیرات، سرویس، ترمیم و رنگ‌آمیزی</p>
+                <p>ساخت انواع قطعات کربنی</p>
+            </div>
+
+            <div class="links-grid">
+                <a href="https://www.instagram.com/caspian_bike/" target="_blank">
+                    <span>برای ورود به صفحه اینستاگرام و دیدن نمونه کارها کلیک کنین</span>
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://t.me/caspian_bike" target="_blank">
+                    <span>لطفا از کانال تلگرام ما دیدن فرمایید.</span>
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="tel:09120365622">
+                    <div class="phone-row">
+                        <span class="phone-name">کریمی</span>
+                        <span class="phone-number">0912 036 5622</span>
+                    </div>
+                </a>
+            </div>
+
+            <button class="back-btn" onclick="exitWorld()">بازگشت به صفحه اول</button>
+        </div>
+    </div>
+
+    <div class="world" id="world-booking">
+        <div class="world-content">
+            <h2 class="neon-blink-yellow">نوبت‌دهی آنلاین</h2>
+
+            <div class="color-note">
+                فرم را پر کنید تا درخواست‌تان مستقیم در گوگل‌شیت ثبت شود.
+                بعد از ثبت، یک <strong>کد پیگیری</strong> دریافت می‌کنید که
+                می‌توانید از در «پیگیری سفارش» وضعیت را چک کنید.
+            </div>
+
+            <div id="bookingMsg" class="form-msg"></div>
+
+            <form class="service-form" id="bookingForm" onsubmit="return submitBooking(event)">
+                <label for="bkName">نام و نام خانوادگی *</label>
+                <input type="text" id="bkName" name="name" required placeholder="مثلاً: علی رضایی" autocomplete="name">
+
+                <label for="bkPhone">شماره تماس *</label>
+                <input type="tel" id="bkPhone" name="phone" required placeholder="09xxxxxxxxx" dir="ltr" style="text-align:right" autocomplete="tel">
+
+                <label for="bkService">نوع خدمات *</label>
+                <select id="bkService" name="service" required>
+                    <option value="">انتخاب کنید...</option>
+                    <option value="سرویس و تنظیم">سرویس و تنظیم دوچرخه</option>
+                    <option value="تعمیرات">تعمیرات تخصصی</option>
+                    <option value="ترمیم بدنه">ترمیم بدنه</option>
+                    <option value="رنگ‌آمیزی">رنگ‌آمیزی و پوشش سفارشی</option>
+                    <option value="قطعات کربنی">ساخت و نصب قطعات کربنی</option>
+                    <option value="سایر">سایر</option>
+                </select>
+
+                <label for="bkNotes">توضیحات</label>
+                <textarea id="bkNotes" name="notes" placeholder="مدل دوچرخه، مشکل، رنگ مورد نظر و ..."></textarea>
+
+                <label>عکس یا فیلم (اختیاری) — حداکثر حجم هر فایل ۴۰ مگابایت؛ می‌توانید چند فایل بفرستید تا سقف مجموع ۱٫۴ گیگابایت</label>
+                <div class="file-upload-box" onclick="document.getElementById('bkFiles').click()">
+                    <input type="file" id="bkFiles" accept="image/*,video/*" multiple onchange="onBookingFilesChange(this)">
+                    <div class="file-upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        برای انتخاب عکس یا فیلم کلیک کنید
+                    </div>
+                </div>
+                <div class="file-preview-list" id="bkFilePreview"></div>
+
+                <button type="submit" class="submit-btn" id="bkSubmitBtn">ثبت درخواست نوبت</button>
+            </form>
+
+            <button class="back-btn" onclick="exitWorld()">بازگشت به صفحه اول</button>
+        </div>
+    </div>
+
+    <div class="world" id="world-tracking">
+        <div class="world-content">
+            <h2 class="neon-blink-yellow">پیگیری سفارش</h2>
+
+            <div class="color-note">
+                کد پیگیری‌ای که هنگام ثبت نوبت دریافت کردید را وارد کنید
+                تا وضعیت فعلی سفارش‌تان نمایش داده شود.
+            </div>
+
+            <div id="trackMsg" class="form-msg"></div>
+
+            <div id="trackResult" class="track-result"></div>
+
+            <form class="service-form" id="trackingForm" onsubmit="return submitTracking(event)">
+                <label for="trCode">کد پیگیری *</label>
+                <input type="text" id="trCode" name="code" required placeholder="مثلاً: CAS-20260729-A3F2" dir="ltr" style="text-align:right" autocomplete="off">
+
+                <button type="submit" class="submit-btn" id="trSubmitBtn">استعلام وضعیت</button>
+            </form>
+
+            <button class="back-btn" onclick="exitWorld()">بازگشت به صفحه اول</button>
+        </div>
+    </div>
+
+    <div class="world" id="world-colorroom">
+        <div class="world-content">
+            <h2 class="neon-blink-yellow">اتاق رنگ کاسپین</h2>
+
+            <div class="color-note">
+                رنگ‌ها رو انتخاب کن و ببین چه‌جوری روی صفحه‌ی خودت دیده می‌شن.
+                توجه داشته باش که رنگ ممکنه روی صفحه‌نمایش‌های مختلف کمی
+                فرق کنه؛ بهتره قبل از تصمیم نهایی، رنگ رو روی چند دستگاه
+                (مثلاً هم گوشی، هم لپ‌تاپ) هم چک کنی. بعد از انتخاب، کد
+                رنگ رو کپی کن و برای همکار ما بفرست تا دقیقاً همون رنگ
+                رو با دستگاه رنگ‌آمیزی اعمال کنه.
+            </div>
+
+            <div class="selected-color-box" id="selectedColorBox">
+                <div class="selected-color-preview" id="selectedColorPreview"></div>
+                <div class="selected-color-code" id="selectedColorCode"></div>
+                <div class="selected-color-name" id="selectedColorName"></div>
+                <button class="copy-code-btn" id="copyCodeBtn" onclick="copySelectedColorCode()">
+                    کپی کردن کد رنگ
+                </button>
+            </div>
+
+            <input
+                type="text"
+                id="colorFilterInput"
+                class="color-filter-input"
+                placeholder="جستجو در بین ۲۱۳ رنگ (مثلاً: قرمز، red، RAL 3020)..."
+                oninput="filterColorRoom(this.value)"
+            >
+
+            <div class="color-grid" id="colorGrid"></div>
+
+            <button class="back-btn" onclick="exitWorld()">بازگشت به صفحه اول</button>
+        </div>
+    </div>
+
+    <script>
+        const hallway = document.getElementById('hallway');
+
+        function enterWorld(type) {
+            const container = event.currentTarget;
+            container.classList.add('active');
+
+            setTimeout(() => {
+                hallway.style.opacity = '0';
+                hallway.style.pointerEvents = 'none';
+
+                document.getElementById('world-' + type).classList.add('active');
+            }, 1000);
+        }
+
+        function exitWorld() {
+            document.querySelectorAll('.world').forEach(w => w.classList.remove('active'));
+            document.querySelectorAll('.door-container').forEach(d => d.classList.remove('active'));
+
+            setTimeout(() => {
+                hallway.style.opacity = '1';
+                hallway.style.pointerEvents = 'auto';
+            }, 500);
+        }
+
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+
+        function showFormMsg(elId, text, type) {
+            const el = document.getElementById(elId);
+            el.className = 'form-msg visible ' + type;
+            el.innerHTML = text;
+        }
+
+        function hideFormMsg(elId) {
+            const el = document.getElementById(elId);
+            el.className = 'form-msg';
+            el.innerHTML = '';
+        }
+
+        var bookingFiles = [];
+        var MAX_FILE_SIZE = 40 * 1024 * 1024;
+        var MAX_TOTAL_SIZE = 1400 * 1024 * 1024;
+
+        function bookingTotalSize() {
+            var t = 0;
+            for (var i = 0; i < bookingFiles.length; i++) t += bookingFiles[i].size;
+            return t;
+        }
+
+        function formatMb(bytes) {
+            return (bytes / (1024 * 1024)).toFixed(1);
+        }
+
+        function onBookingFilesChange(input) {
+            hideFormMsg('bookingMsg');
+            var incoming = Array.from(input.files || []);
+            input.value = '';
+
+            for (var i = 0; i < incoming.length; i++) {
+                var f = incoming[i];
+                if (f.size > MAX_FILE_SIZE) {
+                    showFormMsg('bookingMsg', 'فایل «' + f.name + '» بزرگ‌تر از ۴۰ مگابایت است. آن را فشرده کنید یا چند قسمت کوتاه‌تر بفرستید.', 'err');
+                    continue;
+                }
+                if (!f.type.startsWith('image/') && !f.type.startsWith('video/')) {
+                    showFormMsg('bookingMsg', 'فقط عکس یا فیلم مجاز است.', 'err');
+                    continue;
+                }
+                if (bookingTotalSize() + f.size > MAX_TOTAL_SIZE) {
+                    showFormMsg('bookingMsg', 'جمع حجم فایل‌ها نباید از ۱٫۴ گیگابایت بیشتر شود.', 'err');
+                    break;
+                }
+                bookingFiles.push(f);
+            }
+            renderBookingFilePreview();
+        }
+
+        function removeBookingFile(index) {
+            bookingFiles.splice(index, 1);
+            renderBookingFilePreview();
+        }
+
+        function renderBookingFilePreview() {
+            var box = document.getElementById('bkFilePreview');
+            box.innerHTML = '';
+            bookingFiles.forEach(function (f, idx) {
+                var item = document.createElement('div');
+                item.className = 'file-preview-item';
+
+                if (f.type.startsWith('image/')) {
+                    var img = document.createElement('img');
+                    img.src = URL.createObjectURL(f);
+                    item.appendChild(img);
+                } else {
+                    var vid = document.createElement('video');
+                    vid.src = URL.createObjectURL(f);
+                    vid.muted = true;
+                    item.appendChild(vid);
+                }
+
+                var name = document.createElement('div');
+                name.className = 'file-name';
+                name.textContent = f.name;
+                item.appendChild(name);
+
+                var rm = document.createElement('button');
+                rm.type = 'button';
+                rm.className = 'file-remove';
+                rm.textContent = '×';
+                rm.onclick = function (ev) {
+                    ev.stopPropagation();
+                    removeBookingFile(idx);
+                };
+                item.appendChild(rm);
+                box.appendChild(item);
+            });
+        }
+
+        function fileToBase64(file) {
+            return new Promise(function (resolve, reject) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var result = reader.result || '';
+                    var base64 = String(result).split(',')[1] || '';
+                    resolve({
+                        name: file.name,
+                        mimeType: file.type,
+                        data: base64
+                    });
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function postGas(payload) {
+            var res = await fetch(GAS_WEB_APP_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+            return res.json();
+        }
+
+        async function submitBooking(e) {
+            e.preventDefault();
+            hideFormMsg('bookingMsg');
+
+            var btn = document.getElementById('bkSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = 'در حال ثبت سفارش...';
+
+            try {
+                var data = await postGas({
+                    action: 'book',
+                    name: document.getElementById('bkName').value.trim(),
+                    phone: document.getElementById('bkPhone').value.trim(),
+                    service: document.getElementById('bkService').value,
+                    notes: document.getElementById('bkNotes').value.trim()
+                });
+
+                if (!data.ok) {
+                    showFormMsg('bookingMsg', data.error || 'خطا در ثبت درخواست. دوباره تلاش کنید.', 'err');
+                    btn.disabled = false;
+                    btn.textContent = 'ثبت درخواست نوبت';
+                    return false;
+                }
+
+                var code = data.code;
+                var uploadErrors = 0;
+
+                for (var i = 0; i < bookingFiles.length; i++) {
+                    btn.textContent = 'آپلود فایل ' + (i + 1) + ' از ' + bookingFiles.length + ' (' + formatMb(bookingFiles[i].size) + ' مگ)...';
+                    try {
+                        var encoded = await fileToBase64(bookingFiles[i]);
+                        var up = await postGas({
+                            action: 'uploadFile',
+                            code: code,
+                            name: encoded.name,
+                            mimeType: encoded.mimeType,
+                            data: encoded.data
+                        });
+                        if (!up.ok) uploadErrors++;
+                    } catch (err) {
+                        uploadErrors++;
+                    }
+                }
+
+                var msg = '✅ درخواست شما ثبت شد.<br>کد پیگیری شما: <strong style="direction:ltr;display:inline-block">' +
+                    code +
+                    '</strong><br>این کد را نگه دارید و از بخش «پیگیری سفارش» وضعیت را چک کنید.';
+                if (bookingFiles.length && uploadErrors > 0) {
+                    msg += '<br>⚠️ ' + uploadErrors + ' فایل آپلود نشد. می‌توانید بعداً از طریق تماس فایل را بفرستید.';
+                } else if (bookingFiles.length) {
+                    msg += '<br>همه فایل‌ها با موفقیت ارسال شدند.';
+                }
+
+                showFormMsg('bookingMsg', msg, uploadErrors ? 'err' : 'ok');
+                if (!uploadErrors) {
+                    document.getElementById('bookingForm').reset();
+                    bookingFiles = [];
+                    renderBookingFilePreview();
+                }
+            } catch (err) {
+                showFormMsg('bookingMsg',
+                    'ارتباط با سرور برقرار نشد. اینترنت را چک کنید یا بعداً دوباره تلاش کنید.',
+                    'err');
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'ثبت درخواست نوبت';
+            return false;
+        }
+
+        async function submitTracking(e) {
+            e.preventDefault();
+            hideFormMsg('trackMsg');
+            document.getElementById('trackResult').className = 'track-result';
+            document.getElementById('trackResult').innerHTML = '';
+
+            const code = document.getElementById('trCode').value.trim();
+            if (!code) return false;
+
+            const btn = document.getElementById('trSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = 'در حال جستجو...';
+
+            try {
+                const url = GAS_WEB_APP_URL + '?action=track&code=' + encodeURIComponent(code);
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (data.ok && data.order) {
+                    const o = data.order;
+                    const statusMap = {
+                        'در انتظار': 'status-pending',
+                        'در حال انجام': 'status-progress',
+                        'آماده تحویل': 'status-done',
+                        'تحویل شده': 'status-done',
+                        'لغو شده': 'status-cancelled'
+                    };
+                    const badgeClass = statusMap[o.status] || 'status-pending';
+
+                    document.getElementById('trackResult').innerHTML =
+                        '<div class="track-code">' + o.code + '</div>' +
+                        '<div class="track-row"><strong>نام:</strong> ' + (o.name || '—') + '</div>' +
+                        '<div class="track-row"><strong>خدمات:</strong> ' + (o.service || '—') + '</div>' +
+                        '<div class="track-row"><strong>تاریخ ثبت:</strong> ' + (o.created || '—') + '</div>' +
+                        (o.notes ? '<div class="track-row"><strong>توضیحات:</strong> ' + o.notes + '</div>' : '') +
+                        (o.adminNote ? '<div class="track-row"><strong>یادداشت فروشگاه:</strong> ' + o.adminNote + '</div>' : '') +
+                        '<span class="status-badge ' + badgeClass + '">' + (o.status || 'در انتظار') + '</span>';
+                    document.getElementById('trackResult').className = 'track-result visible';
+                } else {
+                    showFormMsg('trackMsg', data.error || 'سفارشی با این کد پیدا نشد.', 'err');
+                }
+            } catch (err) {
+                showFormMsg('trackMsg',
+                    'ارتباط با سرور برقرار نشد. اینترنت را چک کنید یا بعداً دوباره تلاش کنید.',
+                    'err');
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'استعلام وضعیت';
+            return false;
+        }
+
+
+        const COLOR_ROOM_COLORS = [
+            { code: "RAL 1000", name: "بژ سبز (Green beige)", hex: "#CDBA88" },
+            { code: "RAL 1001", name: "بژ (Beige)", hex: "#D0B084" },
+            { code: "RAL 1002", name: "زرد شنی (Sand yellow)", hex: "#D2AA6D" },
+            { code: "RAL 1003", name: "زرد سیگنال (Signal yellow)", hex: "#F9A800" },
+            { code: "RAL 1004", name: "زرد طلایی (Golden yellow)", hex: "#E49E00" },
+            { code: "RAL 1005", name: "زرد عسلی (Honey yellow)", hex: "#CB8E00" },
+            { code: "RAL 1006", name: "زرد ذرتی (Maize yellow)", hex: "#E29000" },
+            { code: "RAL 1007", name: "زرد نرگسی (Daffodil yellow)", hex: "#E88C00" },
+            { code: "RAL 1011", name: "بژ قهوه‌ای (Brown beige)", hex: "#AF804F" },
+            { code: "RAL 1012", name: "زرد لیمویی (Lemon yellow)", hex: "#DDAF27" },
+            { code: "RAL 1013", name: "سفید صدفی (Oyster white)", hex: "#E3D9C6" },
+            { code: "RAL 1014", name: "عاجی (Ivory)", hex: "#DDC49A" },
+            { code: "RAL 1015", name: "عاجی روشن (Light ivory)", hex: "#E6D2B5" },
+            { code: "RAL 1016", name: "زرد گوگردی (Sulfur yellow)", hex: "#F1DD38" },
+            { code: "RAL 1017", name: "زرد زعفرانی (Saffron yellow)", hex: "#F6A950" },
+            { code: "RAL 1018", name: "زرد روی (Zinc yellow)", hex: "#FACA30" },
+            { code: "RAL 1019", name: "بژ خاکستری (Grey beige)", hex: "#A48F7A" },
+            { code: "RAL 1020", name: "زرد زیتونی (Olive yellow)", hex: "#A08F65" },
+            { code: "RAL 1021", name: "زرد کلزا (Colza yellow)", hex: "#F6B600" },
+            { code: "RAL 1023", name: "زرد ترافیکی (Traffic yellow)", hex: "#F7B500" },
+            { code: "RAL 1024", name: "زرد اُخرا (Ochre yellow)", hex: "#BA8F4C" },
+            { code: "RAL 1026", name: "زرد فسفری (Luminous yellow)", hex: "#FFFF00" },
+            { code: "RAL 1027", name: "کاری (Curry)", hex: "#A77F0E" },
+            { code: "RAL 1028", name: "زرد طالبی (Melon yellow)", hex: "#FF9B00" },
+            { code: "RAL 1032", name: "زرد جاروبی (Broom yellow)", hex: "#E2A300" },
+            { code: "RAL 1033", name: "زرد کوکبی (Dahlia yellow)", hex: "#F99A1C" },
+            { code: "RAL 1034", name: "زرد پاستلی (Pastel yellow)", hex: "#EB9C52" },
+            { code: "RAL 1035", name: "بژ مرواریدی (Pearl beige)", hex: "#908370" },
+            { code: "RAL 1036", name: "طلایی مرواریدی (Pearl gold)", hex: "#80643F" },
+            { code: "RAL 1037", name: "زرد آفتابی (Sun yellow)", hex: "#F09200" },
+            { code: "RAL 2000", name: "نارنجی مایل‌به‌زرد (Yellow orange)", hex: "#DD7907" },
+            { code: "RAL 2001", name: "نارنجی مایل‌به‌قرمز (Red orange)", hex: "#BE4E20" },
+            { code: "RAL 2002", name: "شنجرفی (Vermilion)", hex: "#C63927" },
+            { code: "RAL 2003", name: "نارنجی پاستلی (Pastel orange)", hex: "#FA842B" },
+            { code: "RAL 2004", name: "نارنجی خالص (Pure orange)", hex: "#E75B12" },
+            { code: "RAL 2005", name: "نارنجی فسفری (Luminous orange)", hex: "#FF2300" },
+            { code: "RAL 2007", name: "نارنجی روشن فسفری (Luminous bright orange)", hex: "#FFA421" },
+            { code: "RAL 2008", name: "نارنجی مایل‌به‌قرمز روشن (Bright red orange)", hex: "#F3752C" },
+            { code: "RAL 2009", name: "نارنجی ترافیکی (Traffic orange)", hex: "#E15501" },
+            { code: "RAL 2010", name: "نارنجی سیگنال (Signal orange)", hex: "#D4652F" },
+            { code: "RAL 2011", name: "نارنجی عمیق (Deep orange)", hex: "#EC7C25" },
+            { code: "RAL 2012", name: "نارنجی مایل‌به‌صورتی (Salmon orange)", hex: "#DB6A50" },
+            { code: "RAL 2013", name: "نارنجی مرواریدی (Pearl orange)", hex: "#954527" },
+            { code: "RAL 2017", name: "نارنجی RAL (RAL orange)", hex: "#FA4402" },
+            { code: "RAL 3000", name: "قرمز شعله‌ای (Flame red)", hex: "#AB2524" },
+            { code: "RAL 3001", name: "قرمز سیگنال (Signal red)", hex: "#A02128" },
+            { code: "RAL 3002", name: "قرمز قرمزدانه (Carmine red)", hex: "#A1232B" },
+            { code: "RAL 3003", name: "قرمز یاقوتی (Ruby red)", hex: "#8D1D2C" },
+            { code: "RAL 3004", name: "قرمز بنفش (Purple red)", hex: "#701F29" },
+            { code: "RAL 3005", name: "قرمز شرابی (Wine red)", hex: "#5E2028" },
+            { code: "RAL 3007", name: "قرمز مشکی (Black red)", hex: "#402225" },
+            { code: "RAL 3009", name: "قرمز اکسیدی (Oxide red)", hex: "#703731" },
+            { code: "RAL 3011", name: "قرمز قهوه‌ای (Brown red)", hex: "#7E292C" },
+            { code: "RAL 3012", name: "قرمز بژ (Beige red)", hex: "#CB8D73" },
+            { code: "RAL 3013", name: "قرمز گوجه‌ای (Tomato red)", hex: "#9C322E" },
+            { code: "RAL 3014", name: "صورتی عتیقه (Antique pink)", hex: "#D47479" },
+            { code: "RAL 3015", name: "صورتی روشن (Light pink)", hex: "#E1A6AD" },
+            { code: "RAL 3016", name: "قرمز مرجانی (Coral red)", hex: "#AC4034" },
+            { code: "RAL 3017", name: "رز (Rose)", hex: "#D3545F" },
+            { code: "RAL 3018", name: "قرمز توت‌فرنگی (Strawberry red)", hex: "#D14152" },
+            { code: "RAL 3020", name: "قرمز ترافیکی (Traffic red)", hex: "#C1121C" },
+            { code: "RAL 3022", name: "صورتی ماهی‌آزاد (Salmon pink)", hex: "#D56D56" },
+            { code: "RAL 3024", name: "قرمز فسفری (Luminous red)", hex: "#F70000" },
+            { code: "RAL 3026", name: "قرمز روشن فسفری (Luminous bright red)", hex: "#FF0000" },
+            { code: "RAL 3027", name: "قرمز تمشکی (Raspberry red)", hex: "#B42041" },
+            { code: "RAL 3028", name: "قرمز خالص (Pure red)", hex: "#E72512" },
+            { code: "RAL 3031", name: "قرمز شرقی (Orient red)", hex: "#AC323B" },
+            { code: "RAL 3032", name: "قرمز یاقوتی مرواریدی (Pearl ruby red)", hex: "#711521" },
+            { code: "RAL 3033", name: "صورتی مرواریدی (Pearl pink)", hex: "#B24C43" },
+            { code: "RAL 4001", name: "یاسی مایل‌به‌قرمز (Red lilac)", hex: "#8A5A83" },
+            { code: "RAL 4002", name: "بنفش مایل‌به‌قرمز (Red violet)", hex: "#933D50" },
+            { code: "RAL 4003", name: "بنفش خلنگی (Heather violet)", hex: "#D15B8F" },
+            { code: "RAL 4004", name: "بنفش شرابی (Claret violet)", hex: "#691639" },
+            { code: "RAL 4005", name: "یاسی مایل‌به‌آبی (Blue lilac)", hex: "#83639D" },
+            { code: "RAL 4006", name: "بنفش ترافیکی (Traffic purple)", hex: "#992572" },
+            { code: "RAL 4007", name: "بنفش پرپلی (Purple violet)", hex: "#4A203B" },
+            { code: "RAL 4008", name: "بنفش سیگنال (Signal violet)", hex: "#904684" },
+            { code: "RAL 4009", name: "بنفش پاستلی (Pastel violet)", hex: "#A38995" },
+            { code: "RAL 4010", name: "سرخابی تله‌مجنتا (Telemagenta)", hex: "#C63678" },
+            { code: "RAL 4011", name: "بنفش مرواریدی (Pearl violet)", hex: "#8773A1" },
+            { code: "RAL 4012", name: "توت‌سیاه مرواریدی (Pearl blackberry)", hex: "#6B6880" },
+            { code: "RAL 5000", name: "آبی مایل‌به‌بنفش (Violet blue)", hex: "#384C70" },
+            { code: "RAL 5001", name: "آبی مایل‌به‌سبز (Green blue)", hex: "#1F4764" },
+            { code: "RAL 5002", name: "آبی اولترامارین (Ultramarine blue)", hex: "#2B2C7C" },
+            { code: "RAL 5003", name: "آبی یاقوت‌کبود (Sapphire blue)", hex: "#2A3756" },
+            { code: "RAL 5004", name: "آبی مشکی (Black blue)", hex: "#1D1F2A" },
+            { code: "RAL 5005", name: "آبی سیگنال (Signal blue)", hex: "#154889" },
+            { code: "RAL 5007", name: "آبی درخشان (Brilliant blue)", hex: "#41678D" },
+            { code: "RAL 5008", name: "آبی خاکستری (Grey blue)", hex: "#313C48" },
+            { code: "RAL 5009", name: "آبی لاجوردی (Azure blue)", hex: "#2E5978" },
+            { code: "RAL 5010", name: "آبی ژانتین (Gentian blue)", hex: "#13447C" },
+            { code: "RAL 5011", name: "آبی فولادی (Steel blue)", hex: "#232C3F" },
+            { code: "RAL 5012", name: "آبی روشن (Light blue)", hex: "#3481B8" },
+            { code: "RAL 5013", name: "آبی کبالت (Cobalt blue)", hex: "#232D53" },
+            { code: "RAL 5014", name: "آبی کبوتری (Pigeon blue)", hex: "#6C7C98" },
+            { code: "RAL 5015", name: "آبی آسمانی (Sky blue)", hex: "#2874B2" },
+            { code: "RAL 5017", name: "آبی ترافیکی (Traffic blue)", hex: "#0E518D" },
+            { code: "RAL 5018", name: "آبی فیروزه‌ای (Turquoise blue)", hex: "#21888F" },
+            { code: "RAL 5019", name: "آبی کاپری (Capri blue)", hex: "#1A5784" },
+            { code: "RAL 5020", name: "آبی اقیانوسی (Ocean blue)", hex: "#0B4151" },
+            { code: "RAL 5021", name: "آبی آبی (Water blue)", hex: "#07737A" },
+            { code: "RAL 5022", name: "آبی شبانه (Night blue)", hex: "#2F2A5A" },
+            { code: "RAL 5023", name: "آبی دوردست (Distant blue)", hex: "#4D668E" },
+            { code: "RAL 5024", name: "آبی پاستلی (Pastel blue)", hex: "#6A93B0" },
+            { code: "RAL 5025", name: "آبی ژانتین مرواریدی (Pearl Gentian blue)", hex: "#296478" },
+            { code: "RAL 5026", name: "آبی شبانه مرواریدی (Pearl night blue)", hex: "#102C54" },
+            { code: "RAL 6000", name: "سبز زنگاری (Patina green)", hex: "#327662" },
+            { code: "RAL 6001", name: "سبز زمردی (Emerald green)", hex: "#28713E" },
+            { code: "RAL 6002", name: "سبز برگی (Leaf green)", hex: "#276235" },
+            { code: "RAL 6003", name: "سبز زیتونی (Olive green)", hex: "#4B573E" },
+            { code: "RAL 6004", name: "سبز مایل‌به‌آبی (Blue green)", hex: "#0E4243" },
+            { code: "RAL 6005", name: "سبز خزه‌ای (Moss green)", hex: "#0F4336" },
+            { code: "RAL 6006", name: "زیتونی خاکستری (Grey olive)", hex: "#40433B" },
+            { code: "RAL 6007", name: "سبز بطری (Bottle green)", hex: "#283424" },
+            { code: "RAL 6008", name: "سبز قهوه‌ای (Brown green)", hex: "#35382E" },
+            { code: "RAL 6009", name: "سبز کاجی (Fir green)", hex: "#26392F" },
+            { code: "RAL 6010", name: "سبز چمنی (Grass green)", hex: "#3E753B" },
+            { code: "RAL 6011", name: "سبز رزدا (Reseda green)", hex: "#68825B" },
+            { code: "RAL 6012", name: "سبز مشکی (Black green)", hex: "#31403D" },
+            { code: "RAL 6013", name: "سبز نی‌ای (Reed green)", hex: "#797C5A" },
+            { code: "RAL 6014", name: "زیتونی مایل‌به‌زرد (Yellow olive)", hex: "#444337" },
+            { code: "RAL 6015", name: "زیتونی مشکی (Black olive)", hex: "#3D403A" },
+            { code: "RAL 6016", name: "سبز فیروزه‌ای (Turquoise green)", hex: "#026A52" },
+            { code: "RAL 6017", name: "سبز بهاری (May green)", hex: "#468641" },
+            { code: "RAL 6018", name: "سبز مایل‌به‌زرد (Yellow green)", hex: "#48A43F" },
+            { code: "RAL 6019", name: "سبز پاستلی (Pastel green)", hex: "#B7D9B1" },
+            { code: "RAL 6020", name: "سبز کروم (Chrome green)", hex: "#354733" },
+            { code: "RAL 6021", name: "سبز کم‌رنگ (Pale green)", hex: "#86A47C" },
+            { code: "RAL 6022", name: "زیتونی قهوه‌ای (Brown olive)", hex: "#3E3C32" },
+            { code: "RAL 6024", name: "سبز ترافیکی (Traffic green)", hex: "#008754" },
+            { code: "RAL 6025", name: "سبز سرخسی (Fern green)", hex: "#53753C" },
+            { code: "RAL 6026", name: "سبز اوپالی (Opal green)", hex: "#005D52" },
+            { code: "RAL 6027", name: "سبز روشن (Light green)", hex: "#81C0BB" },
+            { code: "RAL 6028", name: "سبز کاج (Pine green)", hex: "#2D5546" },
+            { code: "RAL 6029", name: "سبز نعنایی (Mint green)", hex: "#007243" },
+            { code: "RAL 6032", name: "سبز سیگنال (Signal green)", hex: "#0F8558" },
+            { code: "RAL 6033", name: "فیروزه‌ای نعنایی (Mint turquoise)", hex: "#478A84" },
+            { code: "RAL 6034", name: "فیروزه‌ای پاستلی (Pastel turquoise)", hex: "#7FB0B2" },
+            { code: "RAL 6035", name: "سبز مرواریدی (Pearl green)", hex: "#1B542C" },
+            { code: "RAL 6036", name: "سبز اوپالی مرواریدی (Pearl opal green)", hex: "#005D4C" },
+            { code: "RAL 6037", name: "سبز خالص (Pure green)", hex: "#25E712" },
+            { code: "RAL 6038", name: "سبز فسفری (Luminous green)", hex: "#00F700" },
+            { code: "RAL 7000", name: "خاکستری سنجابی (Squirrel grey)", hex: "#7E8B92" },
+            { code: "RAL 7001", name: "خاکستری نقره‌ای (Silver grey)", hex: "#8F999F" },
+            { code: "RAL 7002", name: "خاکستری زیتونی (Olive grey)", hex: "#817F68" },
+            { code: "RAL 7003", name: "خاکستری خزه‌ای (Moss grey)", hex: "#7A7B6D" },
+            { code: "RAL 7004", name: "خاکستری سیگنال (Signal grey)", hex: "#9EA0A1" },
+            { code: "RAL 7005", name: "خاکستری موشی (Mouse grey)", hex: "#6B716F" },
+            { code: "RAL 7006", name: "خاکستری بژ (Beige grey)", hex: "#756F61" },
+            { code: "RAL 7008", name: "خاکستری خاکی (Khaki grey)", hex: "#746643" },
+            { code: "RAL 7009", name: "خاکستری سبز (Green grey)", hex: "#5B6259" },
+            { code: "RAL 7010", name: "خاکستری چادری (Tarpaulin grey)", hex: "#575D57" },
+            { code: "RAL 7011", name: "خاکستری آهنی (Iron grey)", hex: "#555D61" },
+            { code: "RAL 7012", name: "خاکستری بازالتی (Basalt grey)", hex: "#596163" },
+            { code: "RAL 7013", name: "خاکستری قهوه‌ای (Brown grey)", hex: "#555548" },
+            { code: "RAL 7015", name: "خاکستری سنگ‌لوح (Slate grey)", hex: "#51565C" },
+            { code: "RAL 7016", name: "خاکستری آنتراسیت (Anthracite grey)", hex: "#373F43" },
+            { code: "RAL 7021", name: "خاکستری مشکی (Black grey)", hex: "#2E3234" },
+            { code: "RAL 7022", name: "خاکستری اُمبرا (Umbra grey)", hex: "#4B4D46" },
+            { code: "RAL 7023", name: "خاکستری بتنی (Concrete grey)", hex: "#818479" },
+            { code: "RAL 7024", name: "خاکستری گرافیتی (Graphite grey)", hex: "#474A50" },
+            { code: "RAL 7026", name: "خاکستری گرانیتی (Granite grey)", hex: "#374447" },
+            { code: "RAL 7030", name: "خاکستری سنگی (Stone grey)", hex: "#939388" },
+            { code: "RAL 7031", name: "خاکستری آبی (Blue grey)", hex: "#5D6970" },
+            { code: "RAL 7032", name: "خاکستری ریگی (Pebble grey)", hex: "#B9B9A8" },
+            { code: "RAL 7033", name: "خاکستری سیمانی (Cement grey)", hex: "#818979" },
+            { code: "RAL 7034", name: "خاکستری زرد (Yellow grey)", hex: "#939176" },
+            { code: "RAL 7035", name: "خاکستری روشن (Light grey)", hex: "#CBD0CC" },
+            { code: "RAL 7036", name: "خاکستری پلاتینی (Platinum grey)", hex: "#9A9697" },
+            { code: "RAL 7037", name: "خاکستری غبارآلود (Dusty grey)", hex: "#7C7F7E" },
+            { code: "RAL 7038", name: "خاکستری عقیقی (Agate grey)", hex: "#B4B8B0" },
+            { code: "RAL 7039", name: "خاکستری کوارتزی (Quartz grey)", hex: "#6B695F" },
+            { code: "RAL 7040", name: "خاکستری پنجره‌ای (Window grey)", hex: "#9DA3A6" },
+            { code: "RAL 7042", name: "خاکستری ترافیکی A (Traffic grey A)", hex: "#8F9695" },
+            { code: "RAL 7043", name: "خاکستری ترافیکی B (Traffic grey B)", hex: "#4E5451" },
+            { code: "RAL 7044", name: "خاکستری ابریشمی (Silk grey)", hex: "#BDBDB2" },
+            { code: "RAL 7045", name: "تله‌گری ۱ (Telegrey 1)", hex: "#91969A" },
+            { code: "RAL 7046", name: "تله‌گری ۲ (Telegrey 2)", hex: "#82898E" },
+            { code: "RAL 7047", name: "تله‌گری ۴ (Telegrey 4)", hex: "#CFD0CF" },
+            { code: "RAL 8000", name: "قهوه‌ای سبز (Green brown)", hex: "#887142" },
+            { code: "RAL 8001", name: "قهوه‌ای اُخرایی (Ochre brown)", hex: "#9C6B30" },
+            { code: "RAL 8002", name: "قهوه‌ای سیگنال (Signal brown)", hex: "#7B5141" },
+            { code: "RAL 8003", name: "قهوه‌ای گلی (Clay brown)", hex: "#80542F" },
+            { code: "RAL 8004", name: "قهوه‌ای مسی (Copper brown)", hex: "#8F4E35" },
+            { code: "RAL 8007", name: "قهوه‌ای بچه‌آهویی (Fawn brown)", hex: "#6F4A2F" },
+            { code: "RAL 8008", name: "قهوه‌ای زیتونی (Olive brown)", hex: "#6F4F28" },
+            { code: "RAL 8011", name: "قهوه‌ای گردویی (Nut brown)", hex: "#5A3A29" },
+            { code: "RAL 8012", name: "قهوه‌ای مایل‌به‌قرمز (Red brown)", hex: "#673831" },
+            { code: "RAL 8014", name: "قهوه‌ای سپیایی (Sepia brown)", hex: "#49392D" },
+            { code: "RAL 8015", name: "قهوه‌ای شاه‌بلوطی (Chestnut brown)", hex: "#633A34" },
+            { code: "RAL 8016", name: "قهوه‌ای ماهاگونی (Mahogany brown)", hex: "#4C2F26" },
+            { code: "RAL 8017", name: "قهوه‌ای شکلاتی (Chocolate brown)", hex: "#44322D" },
+            { code: "RAL 8019", name: "قهوه‌ای خاکستری (Grey brown)", hex: "#3F3A3A" },
+            { code: "RAL 8022", name: "قهوه‌ای مشکی (Black brown)", hex: "#211F20" },
+            { code: "RAL 8023", name: "قهوه‌ای نارنجی (Orange brown)", hex: "#A65E2F" },
+            { code: "RAL 8024", name: "قهوه‌ای بژ (Beige brown)", hex: "#79553C" },
+            { code: "RAL 8025", name: "قهوه‌ای کم‌رنگ (Pale brown)", hex: "#755C49" },
+            { code: "RAL 8028", name: "قهوه‌ای خاکی (Terra brown)", hex: "#4E3B2B" },
+            { code: "RAL 8029", name: "مسی مرواریدی (Pearl copper)", hex: "#773C27" },
+            { code: "RAL 9001", name: "کِرِم (Cream)", hex: "#EFEBDC" },
+            { code: "RAL 9002", name: "سفید خاکستری (Grey white)", hex: "#DDDED4" },
+            { code: "RAL 9003", name: "سفید سیگنال (Signal white)", hex: "#F4F8F4" },
+            { code: "RAL 9004", name: "مشکی سیگنال (Signal black)", hex: "#2E3032" },
+            { code: "RAL 9005", name: "مشکی جوهری (Jet black)", hex: "#0A0A0D" },
+            { code: "RAL 9006", name: "سفید آلومینیومی (White aluminium)", hex: "#A5A8A6" },
+            { code: "RAL 9007", name: "خاکستری آلومینیومی (Grey aluminium)", hex: "#8F8F8C" },
+            { code: "RAL 9010", name: "سفید خالص (Pure white)", hex: "#F7F9EF" },
+            { code: "RAL 9011", name: "مشکی گرافیتی (Graphite black)", hex: "#1C1C1C" },
+            { code: "RAL 9016", name: "سفید ترافیکی (Traffic white)", hex: "#F7FBF5" },
+            { code: "RAL 9017", name: "مشکی ترافیکی (Traffic black)", hex: "#2A2D2F" },
+            { code: "RAL 9018", name: "سفید پاپیروسی (Papyrus white)", hex: "#CFD3CD" },
+            { code: "RAL 9022", name: "خاکستری روشن مرواریدی (Pearl light grey)", hex: "#9C9C9C" },
+            { code: "RAL 9023", name: "خاکستری تیره مرواریدی (Pearl dark grey)", hex: "#7E8182" }
+        ];
+
+        function buildColorRoom(filterText) {
+            const grid = document.getElementById('colorGrid');
+            grid.innerHTML = '';
+
+            const q = (filterText || '').trim().toLowerCase();
+
+            COLOR_ROOM_COLORS.forEach((c, index) => {
+
+                if (q) {
+                    const haystack = (c.code + ' ' + c.name).toLowerCase();
+                    if (!haystack.includes(q)) {
+                        return;
+                    }
+                }
+
+                const swatch = document.createElement('div');
+                swatch.className = 'swatch';
+                swatch.onclick = () => selectColor(index, swatch);
+
+                const colorBox = document.createElement('div');
+                colorBox.className = 'swatch-color';
+                colorBox.style.backgroundColor = c.hex;
+
+                const label = document.createElement('div');
+                label.className = 'swatch-label';
+                label.textContent = c.name;
+
+                swatch.appendChild(colorBox);
+                swatch.appendChild(label);
+                grid.appendChild(swatch);
+            });
+        }
+
+        function filterColorRoom(text) {
+            buildColorRoom(text);
+        }
+
+        function selectColor(index, swatchEl) {
+            const c = COLOR_ROOM_COLORS[index];
+
+            document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
+            swatchEl.classList.add('selected');
+
+            document.getElementById('selectedColorPreview').style.backgroundColor = c.hex;
+            document.getElementById('selectedColorCode').textContent = c.code + '  (' + c.hex + ')';
+            document.getElementById('selectedColorName').textContent = c.name;
+
+            const box = document.getElementById('selectedColorBox');
+            box.classList.add('visible');
+
+            const copyBtn = document.getElementById('copyCodeBtn');
+            copyBtn.classList.remove('copied');
+            copyBtn.textContent = 'کپی کردن کد رنگ';
+
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copySelectedColorCode() {
+            const codeText = document.getElementById('selectedColorCode').textContent;
+            const copyBtn = document.getElementById('copyCodeBtn');
+
+            const finish = () => {
+                copyBtn.classList.add('copied');
+                copyBtn.textContent = 'کپی شد ✓';
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.textContent = 'کپی کردن کد رنگ';
+                }, 2000);
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(codeText).then(finish).catch(finish);
+            } else {
+                finish();
+            }
+        }
+
+        buildColorRoom();
+    </script>
+
+</body>
+</html>
