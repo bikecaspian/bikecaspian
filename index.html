@@ -1046,7 +1046,16 @@
             }, 500);
         }
 
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/library/d/1_s3kQX7zOJAk9-2KZrWUC_nZ5CAwjLLEWncPQsuRgqmKbQsXlto6xGa3/1/exec';
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxThzWVqK1YMrLOOl7lJncoC4QNFWv46oMUNgEYEbTZCGnApa5kOU-mpsfBi3k2HkVG/exec';
+
+        // مقادیری که از سرور/کاربر می‌آیند (اسم، توضیحات و ...) قبل از تزریق در innerHTML
+        // باید escape شوند، وگرنه هر کسی که هنگام ثبت سفارش کد HTML/JS در فیلدها بگذارد
+        // می‌تواند در صفحه‌ی پیگیری برای هر بازدیدکننده‌ای اسکریپت اجرا کند (Stored XSS).
+        function escapeHtml(val) {
+            return String(val === undefined || val === null ? '' : val).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
 
         function showFormMsg(elId, text, type) {
             const el = document.getElementById(elId);
@@ -1159,10 +1168,18 @@
         async function postGas(payload) {
             var res = await fetch(GAS_WEB_APP_URL, {
                 method: 'POST',
+                mode: 'cors',
+                credentials: 'omit',
+                redirect: 'follow',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(payload)
             });
-            return res.json();
+            var text = await res.text();
+            try {
+                return JSON.parse(text);
+            } catch (err) {
+                return { ok: false, error: 'پاسخ نامعتبر از سرور' };
+            }
         }
 
         async function submitBooking(e) {
@@ -1249,9 +1266,10 @@
             btn.textContent = 'در حال جستجو...';
 
             try {
-                const url = GAS_WEB_APP_URL + '?action=track&code=' + encodeURIComponent(code);
-                const res = await fetch(url);
-                const data = await res.json();
+                var data = await postGas({
+                    action: 'track',
+                    code: code
+                });
 
                 if (data.ok && data.order) {
                     const o = data.order;
@@ -1265,13 +1283,13 @@
                     const badgeClass = statusMap[o.status] || 'status-pending';
 
                     document.getElementById('trackResult').innerHTML =
-                        '<div class="track-code">' + o.code + '</div>' +
-                        '<div class="track-row"><strong>نام:</strong> ' + (o.name || '—') + '</div>' +
-                        '<div class="track-row"><strong>خدمات:</strong> ' + (o.service || '—') + '</div>' +
-                        '<div class="track-row"><strong>تاریخ ثبت:</strong> ' + (o.created || '—') + '</div>' +
-                        (o.notes ? '<div class="track-row"><strong>توضیحات:</strong> ' + o.notes + '</div>' : '') +
-                        (o.adminNote ? '<div class="track-row"><strong>یادداشت فروشگاه:</strong> ' + o.adminNote + '</div>' : '') +
-                        '<span class="status-badge ' + badgeClass + '">' + (o.status || 'در انتظار') + '</span>';
+                        '<div class="track-code">' + escapeHtml(o.code) + '</div>' +
+                        '<div class="track-row"><strong>نام:</strong> ' + (o.name ? escapeHtml(o.name) : '—') + '</div>' +
+                        '<div class="track-row"><strong>خدمات:</strong> ' + (o.service ? escapeHtml(o.service) : '—') + '</div>' +
+                        '<div class="track-row"><strong>تاریخ ثبت:</strong> ' + (o.created ? escapeHtml(o.created) : '—') + '</div>' +
+                        (o.notes ? '<div class="track-row"><strong>توضیحات:</strong> ' + escapeHtml(o.notes) + '</div>' : '') +
+                        (o.adminNote ? '<div class="track-row"><strong>یادداشت فروشگاه:</strong> ' + escapeHtml(o.adminNote) + '</div>' : '') +
+                        '<span class="status-badge ' + badgeClass + '">' + escapeHtml(o.status || 'در انتظار') + '</span>';
                     document.getElementById('trackResult').className = 'track-result visible';
                 } else {
                     showFormMsg('trackMsg', data.error || 'سفارشی با این کد پیدا نشد.', 'err');
