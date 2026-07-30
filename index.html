@@ -52,6 +52,10 @@
             pointer-events: none;
         }
 
+        body.anim-paused::before {
+            animation-play-state: paused;
+        }
+
         @keyframes floatingStars {
             0%   { background-position: 0 0; }
             100% { background-position: 1000px 1000px; }
@@ -891,11 +895,11 @@
             </div>
 
             <div class="links-grid">
-                <a href="https://www.instagram.com/caspian_bike/" target="_blank">
+                <a href="https://www.instagram.com/caspian_bike/" target="_blank" rel="noopener noreferrer">
                     <span>برای ورود به صفحه اینستاگرام و دیدن نمونه کارها کلیک کنین</span>
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://t.me/caspian_bike" target="_blank">
+                <a href="https://t.me/caspian_bike" target="_blank" rel="noopener noreferrer">
                     <span>لطفا از کانال تلگرام ما دیدن فرمایید.</span>
                     <i class="fab fa-telegram"></i>
                 </a>
@@ -928,7 +932,7 @@
                 <input type="text" id="bkName" name="name" required placeholder="مثلاً: علی رضایی" autocomplete="name">
 
                 <label for="bkPhone">شماره تماس *</label>
-                <input type="tel" id="bkPhone" name="phone" required placeholder="09xxxxxxxxx" dir="ltr" style="text-align:right" autocomplete="tel">
+                <input type="tel" id="bkPhone" name="phone" required placeholder="09xxxxxxxxx" dir="ltr" style="text-align:right" autocomplete="tel" pattern="0[0-9]{10}" maxlength="11" title="شماره موبایل باید ۱۱ رقم و با 09 شروع شود">
 
                 <label for="bkService">نوع خدمات *</label>
                 <select id="bkService" name="service" required>
@@ -1046,7 +1050,7 @@
             }, 500);
         }
 
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzHRxbhsKtYRK7_ldUuwQq6xHWmmjZIhKieYUQy3CkBKri4BJ6Koeoc2w2lDHMXPiHl/exec';
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxThzWVqK1YMrLOOl7lJncoC4QNFWv46oMUNgEYEbTZCGnApa5kOU-mpsfBi3k2HkVG/exec';
 
         // مقادیری که از سرور/کاربر می‌آیند (اسم، توضیحات و ...) قبل از تزریق در innerHTML
         // باید escape شوند، وگرنه هر کسی که هنگام ثبت سفارش کد HTML/JS در فیلدها بگذارد
@@ -1148,6 +1152,45 @@
             });
         }
 
+        // عکس‌ها را قبل از ارسال با Canvas فشرده می‌کند (کیفیت ۰٫۸ JPEG، حداکثر
+        // ضلع ۱۹۲۰px) تا حجم و زمان آپلود چند برابر کمتر شود. فیلم‌ها دست‌نخورده می‌مانند.
+        function compressImageIfNeeded(file) {
+            return new Promise(function (resolve) {
+                if (file.type.indexOf('image/') !== 0 || file.type === 'image/gif') {
+                    resolve(file);
+                    return;
+                }
+                var img = new Image();
+                var url = URL.createObjectURL(file);
+                img.onload = function () {
+                    URL.revokeObjectURL(url);
+                    var maxSide = 1920;
+                    var w = img.width, h = img.height;
+                    if (w > maxSide || h > maxSide) {
+                        if (w > h) { h = Math.round(h * maxSide / w); w = maxSide; }
+                        else { w = Math.round(w * maxSide / h); h = maxSide; }
+                    }
+                    var canvas = document.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    canvas.toBlob(function (blob) {
+                        if (!blob || blob.size >= file.size) {
+                            resolve(file); // اگر فشرده‌سازی کمکی نکرد، فایل اصلی را بفرست
+                            return;
+                        }
+                        resolve(new File([blob], file.name.replace(/\.\w+$/, '.jpg'), { type: 'image/jpeg' }));
+                    }, 'image/jpeg', 0.8);
+                };
+                img.onerror = function () {
+                    URL.revokeObjectURL(url);
+                    resolve(file); // اگر بارگذاری تصویر خطا داد، فایل اصلی را بفرست
+                };
+                img.src = url;
+            });
+        }
+
         function fileToBase64(file) {
             return new Promise(function (resolve, reject) {
                 var reader = new FileReader();
@@ -1166,19 +1209,31 @@
         }
 
         async function postGas(payload) {
-            var res = await fetch(GAS_WEB_APP_URL, {
-                method: 'POST',
-                mode: 'cors',
-                credentials: 'omit',
-                redirect: 'follow',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
-            var text = await res.text();
+            var controller = new AbortController();
+            var timeoutId = setTimeout(function () { controller.abort(); }, 30000);
             try {
-                return JSON.parse(text);
+                var res = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    credentials: 'omit',
+                    redirect: 'follow',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload),
+                    signal: controller.signal
+                });
+                var text = await res.text();
+                try {
+                    return JSON.parse(text);
+                } catch (err) {
+                    return { ok: false, error: 'پاسخ نامعتبر از سرور' };
+                }
             } catch (err) {
-                return { ok: false, error: 'پاسخ نامعتبر از سرور' };
+                if (err.name === 'AbortError') {
+                    return { ok: false, error: 'سرور در زمان مناسب پاسخ نداد. دوباره تلاش کنید.' };
+                }
+                throw err;
+            } finally {
+                clearTimeout(timeoutId);
             }
         }
 
@@ -1208,14 +1263,17 @@
 
                 var code = data.code;
                 var uploadErrors = 0;
+                var bkPhoneValue = document.getElementById('bkPhone').value.trim();
 
                 for (var i = 0; i < bookingFiles.length; i++) {
                     btn.textContent = 'آپلود فایل ' + (i + 1) + ' از ' + bookingFiles.length + ' (' + formatMb(bookingFiles[i].size) + ' مگ)...';
                     try {
-                        var encoded = await fileToBase64(bookingFiles[i]);
+                        var toUpload = await compressImageIfNeeded(bookingFiles[i]);
+                        var encoded = await fileToBase64(toUpload);
                         var up = await postGas({
                             action: 'uploadFile',
                             code: code,
+                            phone: bkPhoneValue,
                             name: encoded.name,
                             mimeType: encoded.mimeType,
                             data: encoded.data
@@ -1555,8 +1613,12 @@
             });
         }
 
+        var colorRoomFilterTimer = null;
         function filterColorRoom(text) {
-            buildColorRoom(text);
+            clearTimeout(colorRoomFilterTimer);
+            colorRoomFilterTimer = setTimeout(function () {
+                buildColorRoom(text);
+            }, 250);
         }
 
         function selectColor(index, swatchEl) {
@@ -1600,6 +1662,11 @@
         }
 
         buildColorRoom();
+
+        // متوقف کردن انیمیشن ستاره‌های پس‌زمینه وقتی تب مخفیه، برای صرفه‌جویی باتری/CPU
+        document.addEventListener('visibilitychange', function () {
+            document.body.classList.toggle('anim-paused', document.hidden);
+        });
     </script>
 
 </body>
